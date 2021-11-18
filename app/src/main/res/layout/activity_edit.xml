@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/title_text_size"
                 android:hint="@string/title"
-                android:textColor="@color/purple_500"
+                android:textColor="@color/black"
                 android:textColorHint="@color/hint_text_color_edit_activity"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:hint="@string/text"
-                android:textColor="@color/purple_500"
+                android:textColor="@color/black"
                 android:textColorHint="@color/hint_text_color_edit_activity"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -60,7 +60,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/margin_edit_activity"
             android:layout_marginBottom="@dimen/margin_edit_activity"
-            android:backgroundTint="@color/purple_500"
+            android:backgroundTint="@color/teal_200"
             android:text="@string/save"
             android:textColor="@color/white"
             android:textStyle="bold"
