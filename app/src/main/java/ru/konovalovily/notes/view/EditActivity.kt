@@ -29,20 +29,20 @@ class EditActivity : AppCompatActivity(), EditNotesView {
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun initField(){
+    private fun initField() {
         saveBtn = binding.saveButton
         title = binding.etTitle
         text = binding.etText
         presenter = EditPresenter(this)
     }
 
-    private fun initFun(){
+    private fun initFun() {
 
-        saveBtn.setOnClickListener{
-            presenter.saveNote(title.text.toString(),text.text.toString())
+        saveBtn.setOnClickListener {
+            presenter.saveNote(title.text.toString(), text.text.toString())
         }
 
     }
