@@ -3,4 +3,6 @@
     <string name="title">Title</string>
     <string name="text">Text</string>
     <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="note">Notes</string>
 </resources>
