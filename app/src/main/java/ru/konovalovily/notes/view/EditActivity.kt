@@ -3,7 +3,6 @@ package ru.konovalovily.notes.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.appbar.MaterialToolbar
@@ -36,6 +35,21 @@ class EditActivity : AppCompatActivity(), EditNotesView {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    override fun shareIntent(title: String, text: String) {
+        startActivity(Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, "$title \n $text")
+        })
+    }
+
+    override fun activityIntent(title: String, text: String) {
+        startActivity(
+            Intent(this@EditActivity, MainActivity::class.java)
+                .putExtra(Constant.TITLE_TAG, title)
+                .putExtra(Constant.TEXT_TAG, text)
+        )
+    }
+
     private fun initField() {
         title = binding.etTitle
         text = binding.etText
@@ -52,19 +66,11 @@ class EditActivity : AppCompatActivity(), EditNotesView {
 
             when (it.itemId) {
                 R.id.share -> {
-                    startActivity(Intent(Intent.ACTION_SEND).apply {
-                        type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, "$titleString \n $textString")
-                    })
+                    presenter.onShareButton(titleString, textString)
                     true
                 }
                 R.id.save -> {
                     presenter.saveNote(titleString, textString)
-                    startActivity(
-                        Intent(this@EditActivity, MainActivity::class.java)
-                            .putExtra(Constant.TITLE_TAG, titleString)
-                            .putExtra(Constant.TEXT_TAG, textString)
-                    )
                     true
                 }
                 else -> false

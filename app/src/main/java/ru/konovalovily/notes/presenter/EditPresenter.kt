@@ -7,6 +7,7 @@ class EditPresenter(private val view: EditNotesView) : EditNotesPresenter {
     override fun saveNote(title: String, text: String) {
 
         view.showMessage("Вы сохранили заметку $title")
+        view.activityIntent(title, text)
 
     }
 
@@ -16,6 +17,10 @@ class EditPresenter(private val view: EditNotesView) : EditNotesPresenter {
         if (text.isEmpty()) textString = "Пустая заметка"
 
         return textString
+    }
+
+    override fun onShareButton(title: String, text: String) {
+        view.shareIntent(title, text)
     }
 
     override fun extractTitle(title: String): String {
