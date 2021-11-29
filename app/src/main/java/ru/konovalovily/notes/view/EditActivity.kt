@@ -35,14 +35,14 @@ class EditActivity : AppCompatActivity(), EditNotesView {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun shareIntent(title: String, text: String) {
+    override fun createShareIntent(title: String, text: String) {
         startActivity(Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, "$title \n $text")
         })
     }
 
-    override fun activityIntent(title: String, text: String) {
+    override fun createActivityIntent(title: String, text: String) {
         startActivity(
             Intent(this@EditActivity, MainActivity::class.java)
                 .putExtra(Constant.TITLE_TAG, title)
