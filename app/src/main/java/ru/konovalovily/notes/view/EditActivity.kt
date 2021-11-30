@@ -22,7 +22,11 @@ class EditActivity : AppCompatActivity(), EditNotesView {
 
     private lateinit var presenter: EditNotesPresenter
 
+    private lateinit var emptyNote: String
+    private lateinit var emptyNoteTitle: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -31,11 +35,13 @@ class EditActivity : AppCompatActivity(), EditNotesView {
         initFun()
     }
 
-    override fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    override fun showMessage(message: Int, title: String) {
+
+        Toast.makeText(this, getString(message, title), Toast.LENGTH_SHORT).show()
     }
 
     override fun createShareIntent(title: String, text: String) {
+
         startActivity(Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, "$title \n $text")
@@ -43,6 +49,7 @@ class EditActivity : AppCompatActivity(), EditNotesView {
     }
 
     override fun createActivityIntent(title: String, text: String) {
+
         startActivity(
             Intent(this@EditActivity, MainActivity::class.java)
                 .putExtra(Constant.TITLE_TAG, title)
@@ -51,18 +58,24 @@ class EditActivity : AppCompatActivity(), EditNotesView {
     }
 
     private fun initField() {
+
         title = binding.etTitle
         text = binding.etText
         toolbar = binding.toolbar
         presenter = EditPresenter(this)
+
+        emptyNote = getString(R.string.empty_note)
+        emptyNoteTitle = getString(R.string.empty_note_title)
     }
 
     private fun initFun() {
 
         toolbar.setOnMenuItemClickListener {
 
-            val titleString = presenter.extractTitle(title.text.toString())
-            val textString = presenter.extractText(text.text.toString())
+            val titleString =
+                if (title.text.toString().isEmpty()) emptyNoteTitle else title.text.toString()
+            val textString =
+                if (text.text.toString().isEmpty()) emptyNote else text.text.toString()
 
             when (it.itemId) {
                 R.id.share -> {
