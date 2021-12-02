@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.appbar.MaterialToolbar
-import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.R
 import ru.konovalovily.notes.databinding.ActivityEditBinding
 import ru.konovalovily.notes.presenter.EditNotesPresenter
@@ -48,13 +47,9 @@ class EditActivity : AppCompatActivity(), EditNotesView {
         })
     }
 
-    override fun createActivityIntent(title: String, text: String) {
+    override fun createActivityIntent() {
 
-        startActivity(
-            Intent(this@EditActivity, MainActivity::class.java)
-                .putExtra(Constant.TITLE_TAG, title)
-                .putExtra(Constant.TEXT_TAG, text)
-        )
+        startActivity(Intent(this@EditActivity, MainActivity::class.java))
     }
 
     private fun initField() {
@@ -69,6 +64,10 @@ class EditActivity : AppCompatActivity(), EditNotesView {
     }
 
     private fun initFun() {
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
 
         toolbar.setOnMenuItemClickListener {
 
