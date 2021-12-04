@@ -5,16 +5,14 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import ru.konovalovily.notes.databinding.ActivityMainBinding
-import ru.konovalovily.notes.presenter.MainPresenter
 
-class MainActivity : AppCompatActivity(), MainNotesView {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var fragmentHolder: FragmentContainerView
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
 
-    private lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity(), MainNotesView {
 
         addToolbar()
         initField()
-        if (savedInstanceState == null) presenter.createFragment(
+        if (savedInstanceState == null) openRecyclerViewFragment(
             fragmentHolder.id,
             ItemFragment.newInstance()
         ) else displayHomeButton()
@@ -36,10 +34,9 @@ class MainActivity : AppCompatActivity(), MainNotesView {
 
     private fun initField() {
         fragmentHolder = binding.fragmentContainerView
-        presenter = MainPresenter(this)
     }
 
-    override fun addDescriptionFragment(resId: Int, classFragment: Fragment) {
+    fun openFragment(resId: Int, classFragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             addToBackStack(null)
             replace(resId, classFragment)
@@ -47,21 +44,21 @@ class MainActivity : AppCompatActivity(), MainNotesView {
         }
     }
 
-    override fun createFragment(resId: Int, classFragment: Fragment) {
+    private fun openRecyclerViewFragment(resId: Int, classFragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(resId, classFragment)
             commit()
         }
     }
 
-    override fun displayHomeButton() {
+    private fun displayHomeButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
     }
 
-    override fun hideHomeButton() {
+    fun hideHomeButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 }

@@ -12,7 +12,7 @@ import ru.konovalovily.notes.databinding.FragmentNoteDescriptionBinding
 
 class NoteDescriptionFragment : Fragment() {
 
-    private var binding: FragmentNoteDescriptionBinding? = null
+    private lateinit var binding: FragmentNoteDescriptionBinding
 
     private var item: NoteModel? = null
 
@@ -20,28 +20,27 @@ class NoteDescriptionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        if (arguments != null && requireArguments().containsKey(Constant.TITLE_TAG)) {
-            item = requireArguments().getSerializable(Constant.TITLE_TAG) as NoteModel?
+        if (arguments != null && arguments?.containsKey(Constant.TITLE_TAG) == true) {
+            item = arguments?.getSerializable(Constant.TITLE_TAG) as? NoteModel?
         }
         binding = FragmentNoteDescriptionBinding
             .inflate(inflater, container, false)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.apply {
-            date.text = item?.getData()
-            title.text = item?.getTitle()
-            text.text = item?.getText()
+        binding.apply {
+            date.text = item?.data
+            title.text = item?.title
+            text.text = item?.text
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         if (activity != null) run {
-            val myActivity: MainActivity = activity as MainActivity
-            myActivity.hideHomeButton()
+            (activity as? MainActivity)?.hideHomeButton()
         }
     }
 

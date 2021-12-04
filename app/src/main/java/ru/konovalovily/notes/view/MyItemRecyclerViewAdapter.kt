@@ -10,12 +10,11 @@ import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.NoteModel
 import ru.konovalovily.notes.R
 import ru.konovalovily.notes.databinding.NoteItemBinding
-import ru.konovalovily.notes.presenter.MainNotePresenter
 
 
 class MyItemRecyclerViewAdapter(
     private val values: ArrayList<NoteModel>,
-    private val presenter: MainNotePresenter
+    private val activity: MainActivity?
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,8 +43,8 @@ class MyItemRecyclerViewAdapter(
         private val cardView: MaterialCardView = binding.mcvNoteItem
 
         fun bind(item: NoteModel) {
-            tvTitleNote.text = item.getTitle()
-            tvTextNote.text = item.getText()
+            tvTitleNote.text = item.title
+            tvTextNote.text = item.text
 
             cardView.setOnClickListener {
                 val bundle = Bundle().apply {
@@ -53,7 +52,7 @@ class MyItemRecyclerViewAdapter(
                 }
                 val fragmentToManager = NoteDescriptionFragment.newInstance()
                 fragmentToManager.arguments = bundle
-                presenter.addDescriptionFragment(
+                activity?.openFragment(
                     R.id.fragment_container_view,
                     fragmentToManager
                 )

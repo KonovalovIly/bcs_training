@@ -12,21 +12,21 @@ import ru.konovalovily.notes.presenter.MainPresenter
 
 class ItemFragment : Fragment() {
 
-    private var binding: FragmentItemListBinding? = null
+    private lateinit var binding: FragmentItemListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.apply {
-            val presenter = MainPresenter(activity as MainActivity)
-            list.adapter = MyItemRecyclerViewAdapter(presenter.getNoteData(), presenter)
+        binding.apply {
+            val presenter = MainPresenter()
+            list.adapter = MyItemRecyclerViewAdapter(presenter.noteData(), activity as? MainActivity)
             fabAddNote.setOnClickListener {
                 requireActivity()
                     .startActivity(Intent(activity?.baseContext, EditActivity::class.java))

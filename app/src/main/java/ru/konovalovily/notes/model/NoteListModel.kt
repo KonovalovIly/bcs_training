@@ -4,7 +4,7 @@ import ru.konovalovily.notes.NoteModel
 
 object NoteListModel {
 
-    private val notes = ArrayList<NoteModel>().apply {
+    val notes = ArrayList<NoteModel>().apply {
         add(NoteModel("First Note", "First Text", "16.08.2020"))
         add(NoteModel("Second Note", "Second Text", "16.08.2021"))
         add(
@@ -33,6 +33,4 @@ object NoteListModel {
     fun addNoteToList(noteModel: NoteModel) {
         notes.add(noteModel)
     }
-
-    fun getNoteList(): ArrayList<NoteModel> = notes
 }
