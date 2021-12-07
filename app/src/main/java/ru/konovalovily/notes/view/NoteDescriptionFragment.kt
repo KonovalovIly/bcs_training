@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.NoteModel
+import ru.konovalovily.notes.contracts.IconDisplay
 import ru.konovalovily.notes.databinding.FragmentNoteDescriptionBinding
 
 
@@ -40,7 +41,7 @@ class NoteDescriptionFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         if (activity != null) run {
-            (activity as? MainActivity)?.hideHomeButton()
+            (activity as? IconDisplay)?.hideHomeButton()
         }
     }
 

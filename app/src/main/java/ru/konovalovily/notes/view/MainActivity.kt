@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import ru.konovalovily.notes.contracts.FragmentOpener
+import ru.konovalovily.notes.contracts.IconDisplay
 import ru.konovalovily.notes.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -36,7 +38,8 @@ class MainActivity : AppCompatActivity() {
         fragmentHolder = binding.fragmentContainerView
     }
 
-    fun openFragment(resId: Int, classFragment: Fragment) {
+    override fun openFragment(resId: Int, classFragment: Fragment) {
+        displayHomeButton()
         supportFragmentManager.beginTransaction().apply {
             addToBackStack(null)
             replace(resId, classFragment)
@@ -51,14 +54,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayHomeButton() {
+    override fun displayHomeButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
     }
 
-    fun hideHomeButton() {
+    override fun hideHomeButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 }

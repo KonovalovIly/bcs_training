@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.databinding.FragmentItemListBinding
 import ru.konovalovily.notes.presenter.MainPresenter
 
@@ -26,10 +27,14 @@ class ItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             val presenter = MainPresenter()
-            list.adapter = MyItemRecyclerViewAdapter(presenter.noteData(), activity as? MainActivity)
+            list.adapter =
+                MyItemRecyclerViewAdapter(presenter.noteData(), activity as? FragmentOpener)
             fabAddNote.setOnClickListener {
-                requireActivity()
-                    .startActivity(Intent(activity?.baseContext, EditActivity::class.java))
+                activity?.apply {
+                    startActivity(Intent(activity?.baseContext, EditActivity::class.java))
+                    finish()
+                }
+
             }
         }
     }

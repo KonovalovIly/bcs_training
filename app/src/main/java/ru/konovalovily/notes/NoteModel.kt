@@ -6,4 +6,4 @@ data class NoteModel(
     var title: String,
     var text: String,
     var data: String
-): Serializable
+) : Serializable

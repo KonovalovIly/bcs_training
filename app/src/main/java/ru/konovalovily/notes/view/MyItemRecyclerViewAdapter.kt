@@ -9,12 +9,13 @@ import com.google.android.material.card.MaterialCardView
 import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.NoteModel
 import ru.konovalovily.notes.R
+import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.databinding.NoteItemBinding
 
 
 class MyItemRecyclerViewAdapter(
     private val values: ArrayList<NoteModel>,
-    private val activity: MainActivity?
+    private val activity: FragmentOpener?
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +27,6 @@ class MyItemRecyclerViewAdapter(
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

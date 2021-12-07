@@ -50,6 +50,7 @@ class EditActivity : AppCompatActivity(), EditContract.View {
     override fun openActivity() {
 
         startActivity(Intent(this@EditActivity, MainActivity::class.java))
+        finish()
     }
 
     private fun initField() {
@@ -66,7 +67,7 @@ class EditActivity : AppCompatActivity(), EditContract.View {
     private fun initFun() {
 
         toolbar.setNavigationOnClickListener {
-            onBackPressed()
+            openActivity()
         }
 
         toolbar.setOnMenuItemClickListener {

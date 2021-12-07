@@ -4,7 +4,7 @@ import ru.konovalovily.notes.NoteModel
 
 interface MainContract {
 
-    interface Presenter{
+    interface Presenter {
         fun noteData(): ArrayList<NoteModel>
     }
 }
