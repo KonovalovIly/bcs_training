@@ -22,7 +22,10 @@ class NoteDescriptionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         if (arguments != null && arguments?.containsKey(Constant.TITLE_TAG) == true) {
-            item = arguments?.getSerializable(Constant.TITLE_TAG) as? NoteModel?
+            item = arguments?.getParcelable(Constant.TITLE_TAG) as? NoteModel?
+        }
+        if (activity != null) run {
+            (activity as? IconDisplay)?.displayHomeButton()
         }
         binding = FragmentNoteDescriptionBinding
             .inflate(inflater, container, false)

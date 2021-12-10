@@ -9,11 +9,14 @@
         android:roundIcon="@mipmap/icon_app_round"
         android:supportsRtl="true"
         android:theme="@style/MainTheme">
-
+        <activity
+            android:name=".view.ViewPagerActivity"
+            android:exported="false"
+            android:label="@string/title_activity_view_pager"
+            android:theme="@style/MainTheme.NoActionBar" />
         <activity
             android:name=".view.EditActivity"
             android:exported="true" />
-
         <activity
             android:name=".view.MainActivity"
             android:exported="true">
@@ -23,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

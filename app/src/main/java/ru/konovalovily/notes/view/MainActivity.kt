@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener {
         if (savedInstanceState == null) openRecyclerViewFragment(
             fragmentHolder.id,
             ItemFragment.newInstance()
-        ) else displayHomeButton()
+        )
     }
 
     private fun addToolbar() {
