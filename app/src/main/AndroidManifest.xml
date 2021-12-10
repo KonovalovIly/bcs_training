@@ -12,8 +12,7 @@
         <activity
             android:name=".view.ViewPagerActivity"
             android:exported="false"
-            android:label="@string/title_activity_view_pager"
-            android:theme="@style/MainTheme.NoActionBar" />
+            android:label="@string/title_activity_view_pager"/>
         <activity
             android:name=".view.EditActivity"
             android:exported="true" />
