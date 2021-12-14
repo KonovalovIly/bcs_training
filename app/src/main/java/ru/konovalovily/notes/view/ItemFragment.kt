@@ -33,7 +33,7 @@ class ItemFragment : Fragment(), MainContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MainPresenter(NoteDatabase.getInstance(activity?.baseContext!!))
+        presenter = MainPresenter(NoteDatabase.getInstance(requireContext()))
         binding.apply {
             adapter = MyItemRecyclerViewAdapter(presenter.noteData(), activity as? FragmentOpener)
             list.adapter = adapter

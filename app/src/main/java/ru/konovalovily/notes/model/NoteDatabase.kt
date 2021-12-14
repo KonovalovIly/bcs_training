@@ -14,13 +14,14 @@ abstract class NoteDatabase : RoomDatabase() {
 
     companion object {
         private var INSTANCE: NoteDatabase? = null
+        private const val NAME_DATABASE = "database"
 
         fun getInstance(context: Context): NoteDatabase {
             return if (INSTANCE == null) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     NoteDatabase::class.java,
-                    "database"
+                    NAME_DATABASE
                 ).allowMainThreadQueries().build()
                 INSTANCE = instance
                 instance

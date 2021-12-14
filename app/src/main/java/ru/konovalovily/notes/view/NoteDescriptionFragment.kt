@@ -43,9 +43,8 @@ class NoteDescriptionFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (activity != null) run {
-            (activity as? IconDisplay)?.hideHomeButton()
-        }
+        if (activity != null) (activity as? IconDisplay)?.hideHomeButton()
+
     }
 
     companion object {
