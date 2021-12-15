@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="title">Название</string>
+    <string name="text">Текст заметки</string>
+    <string name="save">Сохранить</string>
+    <string name="share">Поделиться</string>
+    <string name="note">Заметки</string>
+    <string name="empty_note">Пустая заметка</string>
+    <string name="empty_note_title">Без названия</string>
+    <string name="save_message">Вы сохранили заметку %1$s</string>
+    <string name="add_button">Добавить заметку</string>
+    <string name="dialog_message">Вы действительно хоитите сохранить заметку?</string>
+    <string name="positive">Да</string>
+    <string name="negative">Нет</string>
+    <string name="back">Назад</string>
+</resources>

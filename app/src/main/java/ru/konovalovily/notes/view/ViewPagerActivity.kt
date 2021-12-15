@@ -2,6 +2,7 @@ package ru.konovalovily.notes.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import ru.konovalovily.notes.R
 import ru.konovalovily.notes.databinding.ActivityViewPagerBinding
 import ru.konovalovily.notes.model.NoteDatabase
 import ru.konovalovily.notes.presenter.MainPresenter
@@ -23,6 +24,7 @@ class ViewPagerActivity : AppCompatActivity() {
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeActionContentDescription(R.string.back)
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }

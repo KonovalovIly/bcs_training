@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import ru.konovalovily.notes.R
 import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.contracts.IconDisplay
 import ru.konovalovily.notes.databinding.ActivityMainBinding
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener {
 
     override fun displayHomeButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeActionContentDescription(R.string.back)
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
