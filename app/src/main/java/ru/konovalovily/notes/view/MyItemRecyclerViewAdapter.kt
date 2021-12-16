@@ -15,7 +15,7 @@ import ru.konovalovily.notes.databinding.NoteItemBinding
 
 class MyItemRecyclerViewAdapter(
     private var values: List<NoteModel>,
-    private val activity: FragmentOpener?
+    private val activity: FragmentOpener?,
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

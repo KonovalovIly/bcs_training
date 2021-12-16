@@ -13,10 +13,10 @@ class ViewPagerAdapter(private var values: List<NoteModel>) :
     inner class PagerVH(private var binding: FragmentNoteDescriptionBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: NoteModel) {
-            binding.title.text = item.title
-            binding.text.text = item.text
-            binding.date.text = item.data
+        fun bind(item: NoteModel) = with(binding) {
+            title.text = item.title
+            text.text = item.text
+            date.text = item.data
         }
 
     }
@@ -29,6 +29,10 @@ class ViewPagerAdapter(private var values: List<NoteModel>) :
                 false
             )
         )
+
+    fun updateData(values: List<NoteModel>) {
+        this.values = values
+    }
 
     override fun onBindViewHolder(holder: PagerVH, position: Int) {
         holder.bind(values[position])

@@ -3,17 +3,16 @@ package ru.konovalovily.notes.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.appbar.MaterialToolbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.R
-import ru.konovalovily.notes.contracts.EditContract
 import ru.konovalovily.notes.databinding.ActivityEditBinding
-import ru.konovalovily.notes.model.NoteDatabase
-import ru.konovalovily.notes.presenter.EditPresenter
+import ru.konovalovily.notes.viewmodel.EditViewModel
 
-class EditActivity : AppCompatActivity(), EditContract.View {
+class EditActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditBinding
 
@@ -21,10 +20,7 @@ class EditActivity : AppCompatActivity(), EditContract.View {
     private lateinit var text: AppCompatEditText
     private lateinit var toolbar: MaterialToolbar
 
-    private lateinit var presenter: EditContract.Presenter
-
-    private lateinit var emptyNote: String
-    private lateinit var emptyNoteTitle: String
+    private val viewModel by viewModel<EditViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -36,26 +32,21 @@ class EditActivity : AppCompatActivity(), EditContract.View {
         initFun()
     }
 
-    override fun showMessage(message: Int, title: String) {
-
-        Toast.makeText(this, getString(message, title), Toast.LENGTH_SHORT).show()
-    }
-
-    override fun openShareIntent(title: String, text: String) {
+    private fun openShareIntent(title: String, text: String) {
 
         startActivity(Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
+            type = Constant.SHARE_TYPE
             putExtra(Intent.EXTRA_TEXT, "$title \n $text")
         })
     }
 
-    override fun showDialog(title: String, text: String) {
+    private fun showDialog(title: String, text: String) {
         AlertDialog.Builder(this)
             .setMessage(R.string.dialog_message)
             .setPositiveButton(
                 R.string.positive
             ) { _, _ ->
-                presenter.saveNote(title, text)
+                viewModel.saveNote(title, text)
             }.setNegativeButton(R.string.negative) { dialog, _ ->
                 dialog.dismiss()
             }
@@ -68,10 +59,6 @@ class EditActivity : AppCompatActivity(), EditContract.View {
         title = binding.etTitle
         text = binding.etText
         toolbar = binding.toolbar
-        presenter = EditPresenter(this, NoteDatabase.getInstance(this))
-
-        emptyNote = getString(R.string.empty_note)
-        emptyNoteTitle = getString(R.string.empty_note_title)
     }
 
     private fun initFun() {
@@ -81,19 +68,13 @@ class EditActivity : AppCompatActivity(), EditContract.View {
         }
 
         toolbar.setOnMenuItemClickListener {
-
-            val titleString =
-                if (title.text.toString().isEmpty()) emptyNoteTitle else title.text.toString()
-            val textString =
-                if (text.text.toString().isEmpty()) emptyNote else text.text.toString()
-
             when (it.itemId) {
                 R.id.share -> {
-                    presenter.onShareButton(titleString, textString)
+                    openShareIntent(title.text.toString(), text.text.toString())
                     true
                 }
                 R.id.save -> {
-                    showDialog(titleString, textString)
+                    showDialog(title.text.toString(), text.text.toString())
                     true
                 }
                 else -> false

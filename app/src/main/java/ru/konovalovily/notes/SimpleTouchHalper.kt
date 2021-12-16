@@ -2,13 +2,11 @@ package ru.konovalovily.notes
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import ru.konovalovily.notes.contracts.MainContract
-import ru.konovalovily.notes.presenter.MainPresenter
 import ru.konovalovily.notes.view.MyItemRecyclerViewAdapter
+import ru.konovalovily.notes.viewmodel.MainViewModel
 
 class SimpleTouchHelper(
-    private val presenter: MainPresenter,
-    private val view: MainContract.View,
+    private val viewModel: MainViewModel,
     private val adapter: MyItemRecyclerViewAdapter
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
@@ -20,7 +18,7 @@ class SimpleTouchHelper(
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.bindingAdapterPosition
-        presenter.deleteNote(position, view, adapter)
+        viewModel.deleteNote(adapter.getIdItem(position))
     }
 
 }

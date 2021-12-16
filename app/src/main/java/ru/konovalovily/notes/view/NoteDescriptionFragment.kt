@@ -24,9 +24,7 @@ class NoteDescriptionFragment : Fragment() {
         if (arguments != null && arguments?.containsKey(Constant.TITLE_TAG) == true) {
             item = arguments?.getParcelable(Constant.TITLE_TAG) as? NoteModel?
         }
-        if (activity != null) run {
-            (activity as? IconDisplay)?.displayHomeButton()
-        }
+        if (activity != null) (activity as? IconDisplay)?.displayHomeButton()
         binding = FragmentNoteDescriptionBinding
             .inflate(inflater, container, false)
         return binding.root
@@ -34,11 +32,13 @@ class NoteDescriptionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.apply {
             date.text = item?.data
             title.text = item?.title
             text.text = item?.text
         }
+
     }
 
     override fun onDestroyView() {

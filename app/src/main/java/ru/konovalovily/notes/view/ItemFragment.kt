@@ -8,19 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.konovalovily.notes.NoteModel
 import ru.konovalovily.notes.SimpleTouchHelper
 import ru.konovalovily.notes.contracts.FragmentOpener
-import ru.konovalovily.notes.contracts.MainContract
 import ru.konovalovily.notes.databinding.FragmentItemListBinding
-import ru.konovalovily.notes.model.NoteDatabase
-import ru.konovalovily.notes.presenter.MainPresenter
+import ru.konovalovily.notes.viewmodel.MainViewModel
 
 
-class ItemFragment : Fragment(), MainContract.View {
+class ItemFragment : Fragment() {
 
     private lateinit var binding: FragmentItemListBinding
 
-    private lateinit var presenter: MainPresenter
+    private val viewModel by viewModel<MainViewModel>()
     private lateinit var adapter: MyItemRecyclerViewAdapter
 
     override fun onCreateView(
@@ -28,15 +28,21 @@ class ItemFragment : Fragment(), MainContract.View {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(inflater, container, false)
+        adapter = MyItemRecyclerViewAdapter(emptyList(), activity as? FragmentOpener)
+        binding.list.adapter = adapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MainPresenter(NoteDatabase.getInstance(requireContext()))
+
+        viewModel.noteData.observe(
+            viewLifecycleOwner, {
+                updateData(it)
+            }
+        )
+
         binding.apply {
-            adapter = MyItemRecyclerViewAdapter(presenter.noteData(), activity as? FragmentOpener)
-            list.adapter = adapter
             btnViewPager.setOnClickListener {
                 startActivity(Intent(activity?.baseContext, ViewPagerActivity::class.java))
             }
@@ -50,18 +56,13 @@ class ItemFragment : Fragment(), MainContract.View {
     }
 
     private fun initItemTouchHelper() {
-        val itemTouchHelper = ItemTouchHelper(SimpleTouchHelper(presenter, this, adapter))
+        val itemTouchHelper = ItemTouchHelper(SimpleTouchHelper(viewModel, adapter))
         itemTouchHelper.attachToRecyclerView(binding.list)
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateData()
-    }
-
     @SuppressLint("NotifyDataSetChanged")
-    override fun updateData() {
-        adapter.updateData(presenter.noteData())
+    fun updateData(noteList: List<NoteModel>) {
+        adapter.updateData(noteList)
         adapter.notifyDataSetChanged()
     }
 

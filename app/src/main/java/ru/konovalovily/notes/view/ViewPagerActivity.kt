@@ -1,15 +1,21 @@
 package ru.konovalovily.notes.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.konovalovily.notes.NoteModel
 import ru.konovalovily.notes.R
 import ru.konovalovily.notes.databinding.ActivityViewPagerBinding
-import ru.konovalovily.notes.model.NoteDatabase
-import ru.konovalovily.notes.presenter.MainPresenter
+import ru.konovalovily.notes.viewmodel.MainViewModel
 
 class ViewPagerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityViewPagerBinding
+
+    private val viewModel by viewModel<MainViewModel>()
+
+    private var adapter: ViewPagerAdapter = ViewPagerAdapter(emptyList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +37,20 @@ class ViewPagerActivity : AppCompatActivity() {
     }
 
     private fun initViewPager() {
-        val presenter = MainPresenter(NoteDatabase.getInstance(this))
-        binding.viewPager2.adapter = ViewPagerAdapter(presenter.noteData())
+        binding.viewPager2.adapter = adapter
+
+        viewModel.noteData.observe(
+            this, {
+                updateData(it)
+            }
+        )
+
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(noteList: List<NoteModel>) {
+        adapter.updateData(noteList)
+        adapter.notifyDataSetChanged()
+    }
+
 }
