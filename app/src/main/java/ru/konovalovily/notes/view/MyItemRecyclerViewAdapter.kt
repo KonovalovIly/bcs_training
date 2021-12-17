@@ -29,7 +29,6 @@ class MyItemRecyclerViewAdapter(
         )
     }
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.bind(item)

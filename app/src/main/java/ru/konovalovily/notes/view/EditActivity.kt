@@ -30,6 +30,7 @@ class EditActivity : AppCompatActivity() {
 
         initField()
         initFun()
+        if (savedInstanceState != null) showDialog(title.text.toString(), text.text.toString())
     }
 
     private fun openShareIntent(title: String, text: String) {

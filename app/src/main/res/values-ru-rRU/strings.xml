@@ -12,4 +12,6 @@
     <string name="positive">Да</string>
     <string name="negative">Нет</string>
     <string name="back">Назад</string>
+    <string name="empty_note">Пустая заметка</string>
+    <string name="untitled">Без названия</string>
 </resources>
