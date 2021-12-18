@@ -1,12 +1,10 @@
 package ru.konovalovily.notes.view
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import android.widget.TextView
 import com.google.android.material.card.MaterialCardView
-import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.NoteModel
 import ru.konovalovily.notes.R
 import ru.konovalovily.notes.contracts.FragmentOpener
@@ -53,14 +51,9 @@ class MyItemRecyclerViewAdapter(
             tvTextNote.text = item.text
 
             cardView.setOnClickListener {
-                val bundle = Bundle().apply {
-                    putParcelable(Constant.TITLE_TAG, item)
-                }
-                val fragmentToManager = NoteDescriptionFragment.newInstance()
-                fragmentToManager.arguments = bundle
                 activity?.openFragment(
                     R.id.fragment_container_view,
-                    fragmentToManager
+                    NoteDescriptionFragment.newInstance(item)
                 )
             }
         }

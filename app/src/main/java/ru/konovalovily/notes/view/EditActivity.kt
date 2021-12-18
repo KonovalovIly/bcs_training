@@ -3,16 +3,16 @@ package ru.konovalovily.notes.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.appbar.MaterialToolbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.R
+import ru.konovalovily.notes.contracts.Saving
 import ru.konovalovily.notes.databinding.ActivityEditBinding
 import ru.konovalovily.notes.viewmodel.EditViewModel
 
-class EditActivity : AppCompatActivity() {
+class EditActivity : AppCompatActivity(), Saving {
 
     private lateinit var binding: ActivityEditBinding
 
@@ -30,7 +30,6 @@ class EditActivity : AppCompatActivity() {
 
         initField()
         initFun()
-        if (savedInstanceState != null) showDialog(title.text.toString(), text.text.toString())
     }
 
     private fun openShareIntent(title: String, text: String) {
@@ -39,20 +38,6 @@ class EditActivity : AppCompatActivity() {
             type = Constant.SHARE_TYPE
             putExtra(Intent.EXTRA_TEXT, "$title \n $text")
         })
-    }
-
-    private fun showDialog(title: String, text: String) {
-        AlertDialog.Builder(this)
-            .setMessage(R.string.dialog_message)
-            .setPositiveButton(
-                R.string.positive
-            ) { _, _ ->
-                viewModel.saveNote(title, text)
-            }.setNegativeButton(R.string.negative) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setCancelable(true)
-            .create().show()
     }
 
     private fun initField() {
@@ -75,11 +60,15 @@ class EditActivity : AppCompatActivity() {
                     true
                 }
                 R.id.save -> {
-                    showDialog(title.text.toString(), text.text.toString())
+                    DialogSaveNoteFragment().show(supportFragmentManager, Constant.TITLE_TAG)
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    override fun saveNote() {
+        viewModel.saveNote(title.text.toString(), text.text.toString())
     }
 }

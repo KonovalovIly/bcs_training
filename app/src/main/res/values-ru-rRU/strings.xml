@@ -3,8 +3,8 @@
     <string name="app_name">Notes</string>
     <string name="title">Название</string>
     <string name="text">Текст заметки</string>
-    <string name="save">Сохранить</string>
-    <string name="share">Поделиться</string>
+    <string name="save">Сохранить заметку</string>
+    <string name="share">Поделиться заметкой</string>
     <string name="note">Заметки</string>
     <string name="save_message">Вы сохранили заметку %1$s</string>
     <string name="add_button">Добавить заметку</string>
@@ -14,4 +14,6 @@
     <string name="back">Назад</string>
     <string name="empty_note">Пустая заметка</string>
     <string name="untitled">Без названия</string>
+    <string name="edit_button">Изменить заметку</string>
+    <string name="update">Обновить заметку</string>
 </resources>

@@ -4,17 +4,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.konovalovily.notes.R
+import ru.konovalovily.notes.contracts.EditingNote
 import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.contracts.IconDisplay
 import ru.konovalovily.notes.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener {
+class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNote {
 
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var fragmentHolder: FragmentContainerView
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    override lateinit var editButton: FloatingActionButton
+    override lateinit var shareButton: FloatingActionButton
+    override lateinit var updateButton: FloatingActionButton
+    override var currentFragment: NoteDescriptionFragment? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +34,7 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener {
             fragmentHolder.id,
             ItemFragment.newInstance()
         )
+        initFun()
     }
 
     private fun addToolbar() {
@@ -37,14 +44,28 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener {
 
     private fun initField() {
         fragmentHolder = binding.fragmentContainerView
+        editButton = binding.fabEditNote
+        shareButton = binding.fabShareNote
+        updateButton = binding.fabUpdateNote
     }
 
     override fun openFragment(resId: Int, classFragment: Fragment) {
-        displayHomeButton()
         supportFragmentManager.beginTransaction().apply {
             addToBackStack(null)
             replace(resId, classFragment)
             commit()
+        }
+    }
+
+    private fun initFun() {
+        editButton.setOnClickListener {
+            onEdit()
+        }
+        shareButton.setOnClickListener {
+            onShare()
+        }
+        updateButton.setOnClickListener {
+            onUpdate()
         }
     }
 

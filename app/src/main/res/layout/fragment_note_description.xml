@@ -21,11 +21,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_note_item"
+                    android:enabled="false"
                     android:maxLength="25"
                     android:textColor="@color/black"
                     android:textSize="@dimen/title_text_size"
@@ -34,11 +35,13 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/title" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/top_margin_text"
+                    android:enabled="false"
+                    android:minHeight="48dp"
                     android:paddingStart="@dimen/margin_note_item"
                     android:paddingEnd="@dimen/margin_note_item"
                     android:textColor="@color/black"
@@ -55,7 +58,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/note_date" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
