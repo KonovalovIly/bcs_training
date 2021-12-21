@@ -1,10 +1,7 @@
 package ru.konovalovily.notes.model
 
-import android.text.format.DateFormat
 import androidx.lifecycle.LiveData
 import ru.konovalovily.notes.NoteModel
-import ru.konovalovily.notes.R
-import java.util.*
 
 class NoteRepository(private val noteDatabase: NoteDatabase) {
 
