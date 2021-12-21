@@ -6,6 +6,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import ru.konovalovily.notes.di.appModule
+import ru.konovalovily.notes.di.dataModule
 import ru.konovalovily.notes.di.domainModule
 
 class App : Application() {
@@ -16,7 +17,7 @@ class App : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@App)
-            modules(listOf(appModule, domainModule))
+            modules(listOf(appModule, domainModule, dataModule))
 
         }
     }

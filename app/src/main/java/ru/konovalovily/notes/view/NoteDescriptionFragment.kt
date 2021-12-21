@@ -36,7 +36,7 @@ class NoteDescriptionFragment : Fragment() {
         if (arguments != null && arguments?.containsKey(Constant.TITLE_TAG) == true) {
             item = arguments?.getParcelable(Constant.TITLE_TAG) as? NoteModel?
         }
-        (activity as IconDisplay).apply {
+        (activity as? IconDisplay)?.apply {
             displayEditButton()
             displayHomeButton()
             displayShareButton()
@@ -77,20 +77,30 @@ class NoteDescriptionFragment : Fragment() {
 
     fun onUpdateButton() {
         if (item != null) {
-            viewModel.updateNote(
+            item?.id?.let {
                 NoteModel(
-                    item!!.id,
+                    it,
                     titleField.text.toString(),
                     textField.text.toString(),
                     DateFormat.getDateFormat(context).format(Date())
                 )
-            )
+            }?.let {
+                viewModel.updateNote(
+                    it
+                )
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        (activity as EditingNote).currentFragment = this
+        (activity as? EditingNote)?.currentFragment = this
+        (activity as? IconDisplay)?.apply {
+            displayEditButton()
+            hideUpdateButton()
+        }
+        textField.isEnabled = false
+        titleField.isEnabled = false
     }
 
     companion object {

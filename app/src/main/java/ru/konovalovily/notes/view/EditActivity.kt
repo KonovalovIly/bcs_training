@@ -3,6 +3,7 @@ package ru.konovalovily.notes.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.format.DateFormat
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.appbar.MaterialToolbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -11,6 +12,7 @@ import ru.konovalovily.notes.R
 import ru.konovalovily.notes.contracts.Saving
 import ru.konovalovily.notes.databinding.ActivityEditBinding
 import ru.konovalovily.notes.viewmodel.EditViewModel
+import java.util.*
 
 class EditActivity : AppCompatActivity(), Saving {
 
@@ -56,7 +58,7 @@ class EditActivity : AppCompatActivity(), Saving {
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.share -> {
-                    openShareIntent(title.text.toString(), text.text.toString())
+                    openShareIntent(titleString(), textString())
                     true
                 }
                 R.id.save -> {
@@ -69,6 +71,16 @@ class EditActivity : AppCompatActivity(), Saving {
     }
 
     override fun saveNote() {
-        viewModel.saveNote(title.text.toString(), text.text.toString())
+        viewModel.saveNote(
+            titleString(),
+            textString(),
+            DateFormat.getDateFormat(this).format(Date())
+        )
     }
+
+    private fun titleString() = if (title.text?.isEmpty() == true)
+        getString(R.string.untitled) else title.text.toString()
+
+    private fun textString() = if (text.text?.isEmpty() == true)
+        getString(R.string.empty_note) else text.text.toString()
 }

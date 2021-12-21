@@ -5,8 +5,8 @@ import ru.konovalovily.notes.model.NoteRepository
 
 class EditViewModel(private val repository: NoteRepository) : ViewModel() {
 
-    fun saveNote(title: String, text: String) {
-        repository.saveNote(title = title, text = text)
+    fun saveNote(title: String, text: String, currentDate: String) {
+        repository.saveNote(title = title, text = text, currentDate = currentDate)
     }
 
 }

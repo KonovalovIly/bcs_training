@@ -22,8 +22,8 @@ class EditViewModelTest {
 
     @Test
     fun testSaveNote() {
-        viewModel.saveNote("text", "note")
-        verify(repository).saveNote("text", "note")
+        viewModel.saveNote("text", "note", "21.12.2021")
+        verify(repository).saveNote("text", "note","21.12.2021")
     }
 
 }

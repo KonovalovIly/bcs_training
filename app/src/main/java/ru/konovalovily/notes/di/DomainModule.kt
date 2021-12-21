@@ -6,7 +6,7 @@ import ru.konovalovily.notes.model.NoteRepository
 val domainModule = module {
 
     single<NoteRepository> {
-        NoteRepository(context = get())
+        NoteRepository(noteDatabase = get())
     }
 
 }
