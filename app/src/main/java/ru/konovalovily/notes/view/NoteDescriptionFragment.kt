@@ -105,10 +105,10 @@ class NoteDescriptionFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(note: NoteModel)
-                : NoteDescriptionFragment = NoteDescriptionFragment().apply {
-            arguments = Bundle().apply { putParcelable(Constant.TITLE_TAG, note) }
-        }
+        fun newInstance(note: NoteModel): NoteDescriptionFragment =
+            NoteDescriptionFragment().apply {
+                arguments = Bundle().apply { putParcelable(Constant.TITLE_TAG, note) }
+            }
     }
 
 }
