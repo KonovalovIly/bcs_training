@@ -18,5 +18,6 @@
     <string name="untitled">Untitled</string>
     <string name="edit_button">Edit note</string>
     <string name="update">Update note</string>
+    <string name="get_note_from_firebase">Get note from Firebase</string>
 
 </resources>

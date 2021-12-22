@@ -19,18 +19,17 @@
 
             <TextView
                 android:id="@+id/tv_title_note"
+                style="@style/Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLength="25"
-                android:textColor="@color/black"
-                android:textSize="@dimen/title_text_size"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/title" />
 
             <TextView
                 android:id="@+id/tv_text_note"
+                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_edit_activity"
