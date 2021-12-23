@@ -70,15 +70,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_download_note"
-                    style="@style/Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_note_item"
-                    android:text="@string/get_note_from_firebase"
-                    app:layout_constraintTop_toTopOf="parent" />
-
             </LinearLayout>
 
         </ScrollView>

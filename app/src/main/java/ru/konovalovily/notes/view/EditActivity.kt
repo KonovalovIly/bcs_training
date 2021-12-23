@@ -69,15 +69,6 @@ class EditActivity : AppCompatActivity(), Saving {
             }
         }
 
-        binding.btnDownloadNote.setOnClickListener {
-            viewModel.getNote()
-        }
-
-        viewModel.note.observe(this, {
-            title.setText(it.title)
-            text.setText(it.text)
-        })
-
     }
 
     override fun saveNote() {

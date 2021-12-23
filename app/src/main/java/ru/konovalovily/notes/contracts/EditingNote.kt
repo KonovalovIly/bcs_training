@@ -17,5 +17,4 @@ interface EditingNote {
     fun onUpdate() {
         currentFragment?.onUpdateButton()
     }
-
 }

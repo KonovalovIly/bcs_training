@@ -36,11 +36,7 @@ class NoteDescriptionFragment : Fragment() {
         if (arguments != null && arguments?.containsKey(Constant.TITLE_TAG) == true) {
             item = arguments?.getParcelable(Constant.TITLE_TAG) as? NoteModel?
         }
-        (activity as? IconDisplay)?.apply {
-            displayEditButton()
-            displayHomeButton()
-            displayShareButton()
-        }
+
         binding = FragmentNoteDescriptionBinding
             .inflate(inflater, container, false)
         return binding.root
@@ -58,10 +54,7 @@ class NoteDescriptionFragment : Fragment() {
     }
 
     fun onEditButton() {
-        (activity as IconDisplay).apply {
-            hideEditButton()
-            displayUpdateButton()
-        }
+        (activity as IconDisplay).displaySaveActionMode()
         textField.isEnabled = true
         titleField.isEnabled = true
     }
@@ -95,10 +88,7 @@ class NoteDescriptionFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as? EditingNote)?.currentFragment = this
-        (activity as? IconDisplay)?.apply {
-            displayEditButton()
-            hideUpdateButton()
-        }
+        (activity as? IconDisplay)?.displayEditActionMode()
         textField.isEnabled = false
         titleField.isEnabled = false
     }

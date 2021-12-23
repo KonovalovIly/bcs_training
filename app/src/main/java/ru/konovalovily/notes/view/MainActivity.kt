@@ -4,23 +4,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.konovalovily.notes.R
+import ru.konovalovily.notes.callback.EditActionModeCallback
+import ru.konovalovily.notes.callback.SaveActionModeCallback
+import ru.konovalovily.notes.contracts.Downloading
 import ru.konovalovily.notes.contracts.EditingNote
 import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.contracts.IconDisplay
 import ru.konovalovily.notes.databinding.ActivityMainBinding
+import ru.konovalovily.notes.viewmodel.DownloadViewModel
 
-class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNote {
+class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNote, Downloading {
 
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var fragmentHolder: FragmentContainerView
-    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
-    override lateinit var editButton: FloatingActionButton
-    override lateinit var shareButton: FloatingActionButton
-    override lateinit var updateButton: FloatingActionButton
     override var currentFragment: NoteDescriptionFragment? = null
+    private val viewModel by viewModel<DownloadViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,25 +29,25 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        addToolbar()
         initField()
         if (savedInstanceState == null) openRecyclerViewFragment(
             fragmentHolder.id,
             ItemFragment.newInstance()
         )
-        initFun()
-    }
-
-    private fun addToolbar() {
-        toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
     }
 
     private fun initField() {
         fragmentHolder = binding.fragmentContainerView
-        editButton = binding.fabEditNote
-        shareButton = binding.fabShareNote
-        updateButton = binding.fabUpdateNote
+
+        binding.topAppBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.download -> {
+                    onDownload()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun openFragment(resId: Int, classFragment: Fragment) {
@@ -57,18 +58,6 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
         }
     }
 
-    private fun initFun() {
-        editButton.setOnClickListener {
-            onEdit()
-        }
-        shareButton.setOnClickListener {
-            onShare()
-        }
-        updateButton.setOnClickListener {
-            onUpdate()
-        }
-    }
-
     private fun openRecyclerViewFragment(resId: Int, classFragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(resId, classFragment)
@@ -76,15 +65,22 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
         }
     }
 
-    override fun displayHomeButton() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeActionContentDescription(R.string.back)
-        toolbar.setNavigationOnClickListener {
-            onBackPressed()
-        }
+    override fun displayEditActionMode() {
+        startSupportActionMode(EditActionModeCallback(this))
     }
 
-    override fun hideHomeButton() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    override fun displaySaveActionMode() {
+        startSupportActionMode(SaveActionModeCallback(this))
+    }
+
+    override fun onDownload() {
+        viewModel.getNote()
+        if (viewModel.noteFromFirebase.value == null) {
+            viewModel.noteFromFirebase.observe(
+                this, {
+                    viewModel.saveNote(it)
+                }
+            )
+        }
     }
 }

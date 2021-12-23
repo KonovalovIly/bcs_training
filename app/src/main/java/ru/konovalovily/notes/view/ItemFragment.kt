@@ -12,7 +12,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.konovalovily.notes.NoteModel
 import ru.konovalovily.notes.SimpleTouchHelper
 import ru.konovalovily.notes.contracts.FragmentOpener
-import ru.konovalovily.notes.contracts.IconDisplay
 import ru.konovalovily.notes.databinding.FragmentItemListBinding
 import ru.konovalovily.notes.viewmodel.MainViewModel
 
@@ -36,13 +35,6 @@ class ItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as IconDisplay).apply {
-            hideEditButton()
-            hideHomeButton()
-            hideShareButton()
-            hideUpdateButton()
-        }
 
         viewModel.noteData.observe(
             viewLifecycleOwner, {

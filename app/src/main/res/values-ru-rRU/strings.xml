@@ -16,5 +16,5 @@
     <string name="untitled">Без названия</string>
     <string name="edit_button">Изменить заметку</string>
     <string name="update">Обновить заметку</string>
-    <string name="get_note_from_firebase">Скачать заметку из Firebase</string>
+    <string name="download">Скачать заметку из Firebase</string>
 </resources>
