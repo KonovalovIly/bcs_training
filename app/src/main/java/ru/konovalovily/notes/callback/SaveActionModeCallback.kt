@@ -33,5 +33,7 @@ class SaveActionModeCallback(val activity: EditingNote) : ActionMode.Callback {
         }
     }
 
-    override fun onDestroyActionMode(mode: ActionMode?) {}
+    override fun onDestroyActionMode(mode: ActionMode?) {
+        activity.onBack()
+    }
 }

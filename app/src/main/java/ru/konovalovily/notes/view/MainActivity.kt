@@ -1,12 +1,19 @@
 package ru.konovalovily.notes.view
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.konovalovily.notes.R
-import ru.konovalovily.notes.callback.EditActionModeCallback
 import ru.konovalovily.notes.callback.SaveActionModeCallback
 import ru.konovalovily.notes.contracts.Downloading
 import ru.konovalovily.notes.contracts.EditingNote
@@ -22,7 +29,7 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
     private lateinit var fragmentHolder: FragmentContainerView
     override var currentFragment: NoteDescriptionFragment? = null
     private val viewModel by viewModel<DownloadViewModel>()
-
+    private var supportActionMode: ActionMode? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +41,7 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
             fragmentHolder.id,
             ItemFragment.newInstance()
         )
+        initNetworkCheck()
     }
 
     private fun initField() {
@@ -65,12 +73,12 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
         }
     }
 
-    override fun displayEditActionMode() {
-        startSupportActionMode(EditActionModeCallback(this))
+    override fun displaySaveActionMode() {
+        supportActionMode = startSupportActionMode(SaveActionModeCallback(this))
     }
 
-    override fun displaySaveActionMode() {
-        startSupportActionMode(SaveActionModeCallback(this))
+    override fun hideSaveActionMode() {
+        supportActionMode?.finish()
     }
 
     override fun onDownload() {
@@ -82,5 +90,32 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
                 }
             )
         }
+    }
+
+    @SuppressLint("ShowToast")
+    private fun initNetworkCheck() {
+        val cm: ConnectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val builder: NetworkRequest.Builder =
+            NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+        val snackbar: Snackbar =
+            Snackbar
+                .make(binding.llMain, R.string.internet_unavailable, Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction(R.string.hide) { snackbar.dismiss() }
+        if (cm.isDefaultNetworkActive) snackbar.show()
+        cm.registerNetworkCallback(
+            builder.build(),
+            object : ConnectivityManager.NetworkCallback() {
+
+                override fun onAvailable(network: Network) {
+                    snackbar.dismiss()
+                }
+
+                override fun onLost(network: Network) {
+                    snackbar.show()
+                }
+            }
+        )
     }
 }

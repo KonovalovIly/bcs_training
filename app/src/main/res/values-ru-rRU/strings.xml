@@ -17,4 +17,6 @@
     <string name="edit_button">Изменить заметку</string>
     <string name="update">Обновить заметку</string>
     <string name="download">Скачать заметку из Firebase</string>
+    <string name="internet_unavailable">Интернет недоступен</string>
+    <string name="hide">Скрыть</string>
 </resources>

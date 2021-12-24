@@ -6,8 +6,8 @@ interface EditingNote {
 
     var currentFragment: NoteDescriptionFragment?
 
-    fun onEdit() {
-        currentFragment?.onEditButton()
+    fun onBack() {
+        currentFragment?.onBackButton()
     }
 
     fun onShare() {

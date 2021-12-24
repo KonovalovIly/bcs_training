@@ -3,9 +3,9 @@ package ru.konovalovily.notes.view
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.konovalovily.notes.NoteModel
-import ru.konovalovily.notes.callback.EditActionModeCallback
 import ru.konovalovily.notes.callback.SaveActionModeCallback
 import ru.konovalovily.notes.contracts.EditingNote
 import ru.konovalovily.notes.contracts.IconDisplay
@@ -20,6 +20,7 @@ class ViewPagerActivity : AppCompatActivity(), EditingNote, IconDisplay {
 
     private var adapter: ViewPagerAdapter = ViewPagerAdapter(emptyList(), this)
     override var currentFragment: NoteDescriptionFragment? = null
+    private var supportActionMode: ActionMode? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +52,12 @@ class ViewPagerActivity : AppCompatActivity(), EditingNote, IconDisplay {
         adapter.notifyDataSetChanged()
     }
 
-    override fun displayEditActionMode() {
-        startSupportActionMode(EditActionModeCallback(this))
+    override fun displaySaveActionMode() {
+        supportActionMode = startSupportActionMode(SaveActionModeCallback(this))
     }
 
-    override fun displaySaveActionMode() {
-        startSupportActionMode(SaveActionModeCallback(this))
+    override fun hideSaveActionMode() {
+        supportActionMode?.finish()
     }
 
 }

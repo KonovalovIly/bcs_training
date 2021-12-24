@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.cardview.widget.CardView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.NoteModel
@@ -27,6 +28,7 @@ class NoteDescriptionFragment : Fragment() {
     private var item: NoteModel? = null
     private lateinit var textField: AppCompatEditText
     private lateinit var titleField: AppCompatEditText
+    private lateinit var noteDescription: CardView
 
 
     override fun onCreateView(
@@ -48,15 +50,13 @@ class NoteDescriptionFragment : Fragment() {
             textField = text
             titleField = title
             date.text = item?.data
+            noteDescription = cvNoteDescription
         }
         textField.setText(item?.text)
         titleField.setText(item?.title)
-    }
-
-    fun onEditButton() {
-        (activity as IconDisplay).displaySaveActionMode()
-        textField.isEnabled = true
-        titleField.isEnabled = true
+        noteDescription.setOnClickListener {
+            editMode()
+        }
     }
 
     fun onShareButton() {
@@ -68,7 +68,12 @@ class NoteDescriptionFragment : Fragment() {
         })
     }
 
+    fun onBackButton() {
+        standartMode()
+    }
+
     fun onUpdateButton() {
+        standartMode()
         if (item != null) {
             item?.id?.let {
                 NoteModel(
@@ -88,9 +93,21 @@ class NoteDescriptionFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as? EditingNote)?.currentFragment = this
-        (activity as? IconDisplay)?.displayEditActionMode()
+        standartMode()
+    }
+
+    private fun editMode() {
+        (activity as IconDisplay).displaySaveActionMode()
+        textField.isEnabled = true
+        titleField.isEnabled = true
+        noteDescription.isEnabled = false
+    }
+
+    private fun standartMode() {
+        (activity as IconDisplay).hideSaveActionMode()
         textField.isEnabled = false
         titleField.isEnabled = false
+        binding.cvNoteDescription.isEnabled = true
     }
 
     companion object {

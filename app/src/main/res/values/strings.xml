@@ -20,5 +20,6 @@
     <string name="update">Update note</string>
     <string name="download">Download note from Firebase</string>
     <string name="note_description" translatable="false">Note Description</string>
-
+    <string name="internet_unavailable">Internet unavailable</string>
+    <string name="hide">Hide</string>
 </resources>

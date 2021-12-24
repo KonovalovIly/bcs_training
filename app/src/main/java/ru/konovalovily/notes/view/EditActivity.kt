@@ -77,6 +77,10 @@ class EditActivity : AppCompatActivity(), Saving {
             textString(),
             DateFormat.getDateFormat(this).format(Date())
         )
+        val intent = Intent(Constant.TITLE_TAG)
+        intent.putExtra(Constant.TITLE_TAG, titleString())
+        intent.putExtra(Constant.TITLE_TAG_2, textString())
+        sendBroadcast(intent)
     }
 
     private fun titleString() = if (title.text?.isEmpty() == true)
