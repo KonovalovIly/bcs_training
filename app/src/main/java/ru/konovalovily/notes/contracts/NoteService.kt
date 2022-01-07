@@ -7,10 +7,13 @@ import ru.konovalovily.notes.NoteModel
 
 interface NoteService {
 
-    @GET("note.json")
+    @GET(GET_REQUEST)
     fun getNote(
         @Query("alt") alt: String,
         @Query("token") token: String
     ): Call<NoteModel>
 
+    companion object{
+        private const val GET_REQUEST = "note.json"
+    }
 }

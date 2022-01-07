@@ -11,7 +11,7 @@ val domainModule = module {
     }
 
     single<NetworkRepository> {
-        NetworkRepository()
+        NetworkRepository(get())
     }
 
 }

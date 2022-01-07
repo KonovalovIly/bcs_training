@@ -7,25 +7,15 @@ import androidx.lifecycle.MutableLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.NoteModel
 import ru.konovalovily.notes.contracts.NoteService
 
-class NetworkRepository {
+class NetworkRepository(private val services: NoteService) {
 
     val note = MutableLiveData<NoteModel>()
 
     fun noteFromFirebase() {
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(Constant.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val services: NoteService = retrofit.create(NoteService::class.java)
-
-        val listCall: Call<NoteModel> = services.getNote("media", Constant.TOKEN)
+        val listCall: Call<NoteModel> = services.getNote(ALT_REQUEST, TOKEN)
 
         listCall.enqueue(object : Callback<NoteModel> {
             @RequiresApi(Build.VERSION_CODES.N)
@@ -40,5 +30,10 @@ class NetworkRepository {
                 Log.e("Error", t.message.toString())
             }
         })
+    }
+
+    companion object {
+        private const val ALT_REQUEST = "media"
+        private const val TOKEN = "839ddc05-0659-4c3f-b05f-a928fa11db9d"
     }
 }

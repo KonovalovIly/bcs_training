@@ -1,6 +1,6 @@
 package ru.konovalovily.notes.contracts
 
-interface Downloading {
+interface Downloadable {
 
     fun onDownload()
 }

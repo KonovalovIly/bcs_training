@@ -15,14 +15,14 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.konovalovily.notes.R
 import ru.konovalovily.notes.callback.SaveActionModeCallback
-import ru.konovalovily.notes.contracts.Downloading
+import ru.konovalovily.notes.contracts.Downloadable
 import ru.konovalovily.notes.contracts.EditingNote
 import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.contracts.IconDisplay
 import ru.konovalovily.notes.databinding.ActivityMainBinding
 import ru.konovalovily.notes.viewmodel.DownloadViewModel
 
-class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNote, Downloading {
+class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNote, Downloadable {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -30,6 +30,19 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
     override var currentFragment: NoteDescriptionFragment? = null
     private val viewModel by viewModel<DownloadViewModel>()
     private var supportActionMode: ActionMode? = null
+
+    private lateinit var cm: ConnectivityManager
+    private lateinit var snackbar: Snackbar
+    private var callback = object : ConnectivityManager.NetworkCallback() {
+
+        override fun onAvailable(network: Network) {
+            snackbar.dismiss()
+        }
+
+        override fun onLost(network: Network) {
+            snackbar.show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,28 +107,26 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
 
     @SuppressLint("ShowToast")
     private fun initNetworkCheck() {
-        val cm: ConnectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val builder: NetworkRequest.Builder =
             NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-        val snackbar: Snackbar =
-            Snackbar
-                .make(binding.llMain, R.string.internet_unavailable, Snackbar.LENGTH_INDEFINITE)
+         snackbar = Snackbar.make(
+             binding.llMain,
+             R.string.internet_unavailable,
+             Snackbar.LENGTH_INDEFINITE)
         snackbar.setAction(R.string.hide) { snackbar.dismiss() }
+
         if (cm.isDefaultNetworkActive) snackbar.show()
+
         cm.registerNetworkCallback(
             builder.build(),
-            object : ConnectivityManager.NetworkCallback() {
-
-                override fun onAvailable(network: Network) {
-                    snackbar.dismiss()
-                }
-
-                override fun onLost(network: Network) {
-                    snackbar.show()
-                }
-            }
+            callback
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cm.unregisterNetworkCallback(callback)
     }
 }

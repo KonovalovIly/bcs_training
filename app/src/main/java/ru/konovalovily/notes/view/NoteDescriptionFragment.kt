@@ -55,7 +55,7 @@ class NoteDescriptionFragment : Fragment() {
         textField.setText(item?.text)
         titleField.setText(item?.title)
         noteDescription.setOnClickListener {
-            editMode()
+            turnOnEditMode()
         }
     }
 
@@ -69,11 +69,11 @@ class NoteDescriptionFragment : Fragment() {
     }
 
     fun onBackButton() {
-        standartMode()
+        turnOnStandartMode()
     }
 
     fun onUpdateButton() {
-        standartMode()
+        turnOnStandartMode()
         if (item != null) {
             item?.id?.let {
                 NoteModel(
@@ -93,17 +93,17 @@ class NoteDescriptionFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as? EditingNote)?.currentFragment = this
-        standartMode()
+        turnOnStandartMode()
     }
 
-    private fun editMode() {
+    private fun turnOnEditMode() {
         (activity as IconDisplay).displaySaveActionMode()
         textField.isEnabled = true
         titleField.isEnabled = true
         noteDescription.isEnabled = false
     }
 
-    private fun standartMode() {
+    private fun turnOnStandartMode() {
         (activity as IconDisplay).hideSaveActionMode()
         textField.isEnabled = false
         titleField.isEnabled = false

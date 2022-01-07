@@ -1,6 +1,5 @@
 package ru.konovalovily.notes.view
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.konovalovily.notes.NoteModel
 import ru.konovalovily.notes.SimpleTouchHelper
 import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.databinding.FragmentItemListBinding
@@ -28,7 +26,7 @@ class ItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(inflater, container, false)
-        adapter = MyItemRecyclerViewAdapter(emptyList(), activity as? FragmentOpener)
+        adapter = MyItemRecyclerViewAdapter(activity as? FragmentOpener)
         binding.list.adapter = adapter
         return binding.root
     }
@@ -38,7 +36,7 @@ class ItemFragment : Fragment() {
 
         viewModel.noteData.observe(
             viewLifecycleOwner, {
-                updateData(it)
+                adapter.submitList(it)
             }
         )
 
@@ -58,12 +56,6 @@ class ItemFragment : Fragment() {
     private fun initItemTouchHelper() {
         val itemTouchHelper = ItemTouchHelper(SimpleTouchHelper(viewModel, adapter))
         itemTouchHelper.attachToRecyclerView(binding.list)
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateData(noteList: List<NoteModel>) {
-        adapter.updateData(noteList)
-        adapter.notifyDataSetChanged()
     }
 
     companion object {
