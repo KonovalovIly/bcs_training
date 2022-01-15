@@ -40,9 +40,6 @@ class ItemFragment : Fragment() {
         viewModel.currentNoteList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-        viewModel.currentFilteredNoteList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-        }
 
         binding.apply {
             fabAddNote.setOnClickListener {

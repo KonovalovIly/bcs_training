@@ -12,10 +12,6 @@ class MainViewModel(private val repository: NoteRepository) : ViewModel() {
     val currentNoteList: LiveData<List<NoteModel>>
         get() = _currentNoteList
 
-    private val _currentFilteredNoteList: MutableLiveData<List<NoteModel>> = MutableLiveData()
-    val currentFilteredNoteList: LiveData<List<NoteModel>>
-        get() = _currentFilteredNoteList
-
     val noteData: LiveData<List<NoteModel>> = repository.notesList()
 
     private val _positionNoteItem: MutableLiveData<Int> = MutableLiveData()
@@ -32,9 +28,9 @@ class MainViewModel(private val repository: NoteRepository) : ViewModel() {
 
 
     fun filterNotes(query: String?) {
-        _currentFilteredNoteList.value = when (query) {
-            null -> _currentNoteList.value
-            else -> _currentNoteList.value?.filter {
+        _currentNoteList.value = when (query) {
+            null -> noteData.value
+            else -> noteData.value?.filter {
                 it.text.contains(query, ignoreCase = true) ||
                         it.title.contains(query, ignoreCase = true)
             }
