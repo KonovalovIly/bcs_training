@@ -34,6 +34,6 @@ class NetworkRepository(private val services: NoteService) {
 
     companion object {
         private const val ALT_REQUEST = "media"
-        private const val TOKEN = "839ddc05-0659-4c3f-b05f-a928fa11db9d"
+        private const val TOKEN = "070f0ef4-6e35-4895-9d1d-af5597d7e4f2"
     }
 }

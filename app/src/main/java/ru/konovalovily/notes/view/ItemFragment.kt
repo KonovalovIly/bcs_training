@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.ItemTouchHelper
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.konovalovily.notes.SimpleTouchHelper
-import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.databinding.FragmentItemListBinding
 import ru.konovalovily.notes.viewmodel.MainViewModel
 
@@ -26,7 +26,7 @@ class ItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(inflater, container, false)
-        adapter = MyItemRecyclerViewAdapter(activity as? FragmentOpener)
+        adapter = MyItemRecyclerViewAdapter()
         binding.list.adapter = adapter
         return binding.root
     }
@@ -34,21 +34,36 @@ class ItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.noteData.observe(
-            viewLifecycleOwner, {
-                adapter.submitList(it)
-            }
-        )
+        viewModel.noteData.observe(viewLifecycleOwner) {
+            viewModel.updateCurrentList(it)
+        }
+        viewModel.currentNoteList.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+        viewModel.currentFilteredNoteList.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
 
         binding.apply {
-            btnViewPager.setOnClickListener {
-                startActivity(Intent(activity?.baseContext, ViewPagerActivity::class.java))
-            }
             fabAddNote.setOnClickListener {
                 activity?.apply {
                     startActivity(Intent(activity?.baseContext, EditActivity::class.java))
                 }
             }
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    viewModel.filterNotes(query)
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    viewModel.filterNotes(newText)
+                    return true
+                }
+            })
+        }
+        adapter.onClick = {
+            startActivity(ViewPagerActivity.newIntentEditItem(requireContext(), it))
         }
         initItemTouchHelper()
     }

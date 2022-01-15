@@ -1,6 +1,8 @@
 package ru.konovalovily.notes.view
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
@@ -22,12 +24,18 @@ class ViewPagerActivity : AppCompatActivity(), EditingNote, IconDisplay {
     override var currentFragment: NoteDescriptionFragment? = null
     private var supportActionMode: ActionMode? = null
 
+    private var startState = true
+
+    private var noteItem: NoteModel? = null
+    private var positionFragmentItemId = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityViewPagerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initViewPager()
+        noteItem = intent.getParcelableExtra(EXTRA_NOTE_ITEM)
     }
 
 
@@ -41,9 +49,21 @@ class ViewPagerActivity : AppCompatActivity(), EditingNote, IconDisplay {
         viewModel.noteData.observe(
             this, {
                 updateData(it)
+                if (startState) {
+                    findPositionFragment()
+                    binding.viewPager2.setCurrentItem(positionFragmentItemId, false)
+                    startState = false
+                }
             }
         )
 
+    }
+
+    private fun findPositionFragment() {
+        viewModel.setNote(noteItem)
+        viewModel.positionNoteItem.observe(this) {
+            positionFragmentItemId = it
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -58,6 +78,16 @@ class ViewPagerActivity : AppCompatActivity(), EditingNote, IconDisplay {
 
     override fun hideSaveActionMode() {
         supportActionMode?.finish()
+    }
+
+    companion object {
+
+        private const val EXTRA_NOTE_ITEM = "extra_note_item"
+
+        fun newIntentEditItem(context: Context, noteItem: NoteModel): Intent =
+            Intent(context, ViewPagerActivity::class.java).apply {
+                putExtra(EXTRA_NOTE_ITEM, noteItem)
+            }
     }
 
 }
