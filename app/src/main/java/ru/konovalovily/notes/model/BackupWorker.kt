@@ -15,19 +15,18 @@ class BackupWorker(
 
     private val getAllNotesFlowUseCase by inject<GetAllNotesFlowUseCase>()
 
-    override suspend fun doWork(): Result =
-        when (val notes = getAllNotesFlowUseCase().firstOrNull()) {
-            null -> {
-                Log.d(TAG_LOG, "nothing to save")
-                Result.failure()
-            }
-            else -> {
-                Log.d(TAG_LOG, "saved ${notes.size} notes")
-                Result.success()
-            }
+    override suspend fun doWork(): Result {
+        val notes = getAllNotesFlowUseCase().firstOrNull()
+        return if (notes == null) {
+            Log.d(TAG_LOG, "nothing to save")
+            Result.failure()
+        } else {
+            Log.d(TAG_LOG, "saved ${notes.size} notes")
+            Result.success()
         }
+    }
 
     companion object {
-        private const val TAG_LOG = "TAG"
+        private const val TAG_LOG = "BACKUP TAG"
     }
 }
