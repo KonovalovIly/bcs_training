@@ -26,4 +26,8 @@
     <string name="search_hint">Search by notes</string>
     <string name="web_view" translatable="false">Web View</string>
     <string name="location" translatable="false">Location</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="update_location">Update location</string>
+    <string name="location_unenabled">Your location provider is turned off. Please turn it on.</string>
 </resources>
