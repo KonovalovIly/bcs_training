@@ -77,10 +77,10 @@ class LocationFragment : Fragment() {
     private fun subscribeOnLocation() {
 
         val mLocationRequest = LocationRequest.create().apply {
-            interval = 100
-            fastestInterval = 50
+            interval = INTERVAL
+            fastestInterval = FASTEST_INTERVAL
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            maxWaitTime = 100
+            maxWaitTime = WAIT_TIME
         }
 
         val looper = Looper.getMainLooper()
@@ -123,6 +123,10 @@ class LocationFragment : Fragment() {
 
     companion object {
         private const val REQUEST_CODE = 101
+        private const val WAIT_TIME: Long = 100
+        private const val INTERVAL: Long = 100
+        private const val FASTEST_INTERVAL: Long = 50
+
 
         @JvmStatic
         fun newInstance() = LocationFragment()

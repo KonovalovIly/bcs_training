@@ -34,14 +34,14 @@ class CustomTextViewFragment : Fragment() {
 
     private fun startAnimation(){
         val finalY = binding.htmlText.y
-        val startY = finalY - 80
+        val startY = finalY - TRANSLATION
         val objectAnimator = ObjectAnimator.ofFloat(
             binding.htmlText,
             "translationY",
             startY,
             finalY
         ).apply {
-            duration = 1000
+            duration = DURATION
             interpolator = BounceInterpolator()
         }
         objectAnimator.start()
@@ -50,6 +50,8 @@ class CustomTextViewFragment : Fragment() {
 
 
     companion object {
+        private const val DURATION: Long = 1000
+        private const val TRANSLATION = 80
 
         fun newInstance() = CustomTextViewFragment()
     }
