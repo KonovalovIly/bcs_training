@@ -19,5 +19,10 @@
         android:icon="@drawable/ic_baseline_my_location_24"
         android:title="@string/location" />
 
+    <item
+        android:id="@+id/custom_view"
+        android:contentDescription="@string/custom_view"
+        android:icon="@drawable/ic_baseline_html_24"
+        android:title="@string/custom_view" />
 
 </menu>

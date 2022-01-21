@@ -91,6 +91,11 @@ class MainActivity : AppCompatActivity(), IconDisplay, EditingNote, Downloadable
                     binding.drawerLayout.closeDrawers()
                     true
                 }
+                R.id.custom_view -> {
+                    openFragment(fragmentHolder.id, CustomTextViewFragment.newInstance())
+                    binding.drawerLayout.closeDrawers()
+                    true
+                }
                 else -> false
             }
         }

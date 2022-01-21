@@ -30,4 +30,6 @@
     <string name="longitude">Longitude:</string>
     <string name="update_location">Update location</string>
     <string name="location_unenabled">Your location provider is turned off. Please turn it on.</string>
+    <string name="custom_view" translatable="false">Custom TextView</string>
+    <string name="html_text"><![CDATA[<h1>Text in the title of HTML</h1><p>Some text from html</p>]]></string>
 </resources>
