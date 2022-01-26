@@ -10,4 +10,10 @@
     <string name="save_message">You saved the note %1$s</string>
     <string name="note_date">16.08.22</string>
     <string name="add_button">Add Button</string>
+    <string name="view_pager_activity">View Pager Activity</string>
+    <string name="dialog_message">Do you really want to save the note?</string>
+    <string name="positive">Yes</string>
+    <string name="negative">No</string>
+    <string name="title_activity_view_pager">ViewPagerActivity</string>
+
 </resources>

@@ -22,7 +22,10 @@ class NoteDescriptionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         if (arguments != null && arguments?.containsKey(Constant.TITLE_TAG) == true) {
-            item = arguments?.getSerializable(Constant.TITLE_TAG) as? NoteModel?
+            item = arguments?.getParcelable(Constant.TITLE_TAG) as? NoteModel?
+        }
+        if (activity != null) run {
+            (activity as? IconDisplay)?.displayHomeButton()
         }
         binding = FragmentNoteDescriptionBinding
             .inflate(inflater, container, false)
@@ -40,9 +43,8 @@ class NoteDescriptionFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (activity != null) run {
-            (activity as? IconDisplay)?.hideHomeButton()
-        }
+        if (activity != null) (activity as? IconDisplay)?.hideHomeButton()
+
     }
 
     companion object {

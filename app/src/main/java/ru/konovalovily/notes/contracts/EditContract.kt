@@ -5,7 +5,7 @@ interface EditContract {
     interface View {
         fun showMessage(message: Int, title: String)
         fun openShareIntent(title: String, text: String)
-        fun openActivity()
+        fun showDialog(title: String, text: String)
     }
 
     interface Presenter {

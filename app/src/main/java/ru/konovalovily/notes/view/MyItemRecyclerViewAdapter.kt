@@ -14,7 +14,7 @@ import ru.konovalovily.notes.databinding.NoteItemBinding
 
 
 class MyItemRecyclerViewAdapter(
-    private val values: ArrayList<NoteModel>,
+    private var values: List<NoteModel>,
     private val activity: FragmentOpener?
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
@@ -29,12 +29,19 @@ class MyItemRecyclerViewAdapter(
         )
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.bind(item)
     }
 
+    fun updateData(values: List<NoteModel>) {
+        this.values = values
+    }
+
     override fun getItemCount(): Int = values.size
+
+    fun getIdItem(position: Int) = values[position].id
 
     inner class ViewHolder(binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -48,7 +55,7 @@ class MyItemRecyclerViewAdapter(
 
             cardView.setOnClickListener {
                 val bundle = Bundle().apply {
-                    putSerializable(Constant.TITLE_TAG, item)
+                    putParcelable(Constant.TITLE_TAG, item)
                 }
                 val fragmentToManager = NoteDescriptionFragment.newInstance()
                 fragmentToManager.arguments = bundle

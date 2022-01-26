@@ -4,11 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.appbar.MaterialToolbar
 import ru.konovalovily.notes.R
 import ru.konovalovily.notes.contracts.EditContract
 import ru.konovalovily.notes.databinding.ActivityEditBinding
+import ru.konovalovily.notes.model.NoteDatabase
 import ru.konovalovily.notes.presenter.EditPresenter
 
 class EditActivity : AppCompatActivity(), EditContract.View {
@@ -47,10 +49,18 @@ class EditActivity : AppCompatActivity(), EditContract.View {
         })
     }
 
-    override fun openActivity() {
-
-        startActivity(Intent(this@EditActivity, MainActivity::class.java))
-        finish()
+    override fun showDialog(title: String, text: String) {
+        AlertDialog.Builder(this)
+            .setMessage(R.string.dialog_message)
+            .setPositiveButton(
+                R.string.positive
+            ) { _, _ ->
+                presenter.saveNote(title, text)
+            }.setNegativeButton(R.string.negative) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(true)
+            .create().show()
     }
 
     private fun initField() {
@@ -58,7 +68,7 @@ class EditActivity : AppCompatActivity(), EditContract.View {
         title = binding.etTitle
         text = binding.etText
         toolbar = binding.toolbar
-        presenter = EditPresenter(this)
+        presenter = EditPresenter(this, NoteDatabase.getInstance(this))
 
         emptyNote = getString(R.string.empty_note)
         emptyNoteTitle = getString(R.string.empty_note_title)
@@ -67,7 +77,7 @@ class EditActivity : AppCompatActivity(), EditContract.View {
     private fun initFun() {
 
         toolbar.setNavigationOnClickListener {
-            openActivity()
+            onBackPressed()
         }
 
         toolbar.setOnMenuItemClickListener {
@@ -83,7 +93,7 @@ class EditActivity : AppCompatActivity(), EditContract.View {
                     true
                 }
                 R.id.save -> {
-                    presenter.saveNote(titleString, textString)
+                    showDialog(titleString, textString)
                     true
                 }
                 else -> false
