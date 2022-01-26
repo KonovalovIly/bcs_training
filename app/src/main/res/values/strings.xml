@@ -24,12 +24,4 @@
     <string name="hide">Hide</string>
     <string name="search">Search</string>
     <string name="search_hint">Search by notes</string>
-    <string name="web_view" translatable="false">Web View</string>
-    <string name="location" translatable="false">Location</string>
-    <string name="latitude">Latitude:</string>
-    <string name="longitude">Longitude:</string>
-    <string name="update_location">Update location</string>
-    <string name="location_unenabled">Your location provider is turned off. Please turn it on.</string>
-    <string name="custom_view" translatable="false">Custom TextView</string>
-    <string name="html_text"><![CDATA[<h1>Text in the title of HTML</h1><p>Some text from html</p>]]></string>
 </resources>

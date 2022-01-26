@@ -9,7 +9,6 @@ import android.net.NetworkRequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.view.ActionMode
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.snackbar.Snackbar
@@ -18,11 +17,12 @@ import ru.konovalovily.notes.R
 import ru.konovalovily.notes.callback.SaveActionModeCallback
 import ru.konovalovily.notes.contracts.Downloadable
 import ru.konovalovily.notes.contracts.EditingNote
+import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.contracts.IconDisplay
 import ru.konovalovily.notes.databinding.ActivityMainBinding
 import ru.konovalovily.notes.viewmodel.DownloadViewModel
 
-class MainActivity : AppCompatActivity(), IconDisplay, EditingNote, Downloadable {
+class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNote, Downloadable {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), IconDisplay, EditingNote, Downloadable
         setContentView(binding.root)
 
         initField()
-        if (savedInstanceState == null) openFragment(
+        if (savedInstanceState == null) openRecyclerViewFragment(
             fragmentHolder.id,
             ItemFragment.newInstance()
         )
@@ -60,40 +60,10 @@ class MainActivity : AppCompatActivity(), IconDisplay, EditingNote, Downloadable
     private fun initField() {
         fragmentHolder = binding.fragmentContainerView
 
-        binding.topAppBar.apply {
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.download -> {
-                        onDownload()
-                        true
-                    }
-                    else -> false
-                }
-            }
-            setNavigationOnClickListener {
-                binding.drawerLayout.openDrawer(GravityCompat.START)
-            }
-        }
-        binding.navigationView.setNavigationItemSelectedListener {
+        binding.topAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.notes -> {
-                    openFragment(fragmentHolder.id, ItemFragment.newInstance())
-                    binding.drawerLayout.closeDrawers()
-                    true
-                }
-                R.id.location -> {
-                    openFragment(fragmentHolder.id, LocationFragment.newInstance())
-                    binding.drawerLayout.closeDrawers()
-                    true
-                }
-                R.id.web_view -> {
-                    openFragment(fragmentHolder.id, WebViewFragment.newInstance())
-                    binding.drawerLayout.closeDrawers()
-                    true
-                }
-                R.id.custom_view -> {
-                    openFragment(fragmentHolder.id, CustomTextViewFragment.newInstance())
-                    binding.drawerLayout.closeDrawers()
+                R.id.download -> {
+                    onDownload()
                     true
                 }
                 else -> false
@@ -101,7 +71,15 @@ class MainActivity : AppCompatActivity(), IconDisplay, EditingNote, Downloadable
         }
     }
 
-    private fun openFragment(resId: Int, classFragment: Fragment) {
+    override fun openFragment(resId: Int, classFragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            addToBackStack(null)
+            replace(resId, classFragment)
+            commit()
+        }
+    }
+
+    private fun openRecyclerViewFragment(resId: Int, classFragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(resId, classFragment)
             commit()

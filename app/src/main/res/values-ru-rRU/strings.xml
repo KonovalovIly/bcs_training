@@ -21,9 +21,4 @@
     <string name="hide">Скрыть</string>
     <string name="search">Поиск</string>
     <string name="search_hint">Поиск по заметкам</string>
-    <string name="latitude">Широта:</string>
-    <string name="longitude">Долгота:</string>
-    <string name="update_location">Обновить местоположение</string>
-    <string name="location_unenabled">Отслеживание вашего местоположения отключено. Пожалуйста, включите его</string>
-    <string name="html_text"><![CDATA[<h1>Заглавленный текст из HTML</h1><p>Какой-то текст из html</p>]]></string>
 </resources>
