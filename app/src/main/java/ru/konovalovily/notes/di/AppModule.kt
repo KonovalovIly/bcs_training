@@ -3,10 +3,7 @@ package ru.konovalovily.notes.di
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.konovalovily.notes.model.GetAllNotesFlowUseCase
-import ru.konovalovily.notes.viewmodel.DownloadViewModel
-import ru.konovalovily.notes.viewmodel.EditViewModel
-import ru.konovalovily.notes.viewmodel.MainViewModel
-import ru.konovalovily.notes.viewmodel.UpdateViewModel
+import ru.konovalovily.notes.viewmodel.*
 
 val appModule = module {
 
@@ -28,6 +25,10 @@ val appModule = module {
 
     factory<GetAllNotesFlowUseCase> {
         GetAllNotesFlowUseCase(repository = get())
+    }
+
+    viewModel<LocationViewModel> {
+        LocationViewModel()
     }
 
 }
