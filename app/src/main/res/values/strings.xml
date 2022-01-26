@@ -3,4 +3,9 @@
     <string name="title">Title</string>
     <string name="text">Text</string>
     <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="note">Notes</string>
+    <string name="empty_note">Empty note</string>
+    <string name="empty_note_title">Untitled</string>
+    <string name="save_message">You saved the note %1$s</string>
 </resources>
