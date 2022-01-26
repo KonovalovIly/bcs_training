@@ -1,5 +1,6 @@
 package ru.konovalovily.notes.contracts
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ru.konovalovily.notes.NoteModel
 
@@ -7,10 +8,10 @@ import ru.konovalovily.notes.NoteModel
 interface NoteDao {
 
     @Query("SELECT * FROM notes")
-    fun getNotes(): List<NoteModel>
+    fun getNotes(): LiveData<List<NoteModel>>
 
     @Query("SELECT * FROM notes WHERE id=(:id)")
-    fun getNote(id: Long): NoteModel
+    fun getNote(id: Long): LiveData<NoteModel>?
 
     @Insert
     fun insert(note: NoteModel)

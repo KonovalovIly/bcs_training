@@ -2,18 +2,24 @@
     <string name="app_name">Notes</string>
     <string name="title">Title</string>
     <string name="text">Text</string>
-    <string name="save">Save</string>
-    <string name="share">Share</string>
+    <string name="save">Save note</string>
+    <string name="share">Share note</string>
     <string name="note">Notes</string>
-    <string name="empty_note">Empty note</string>
-    <string name="empty_note_title">Untitled</string>
     <string name="save_message">You saved the note %1$s</string>
-    <string name="note_date">16.08.22</string>
-    <string name="add_button">Add Button</string>
-    <string name="view_pager_activity">View Pager Activity</string>
+    <string name="note_date" translatable="false">16.08.22</string>
+    <string name="add_button">Add Note</string>
+    <string name="view_pager_activity" translatable="false">View Pager Activity</string>
     <string name="dialog_message">Do you really want to save the note?</string>
     <string name="positive">Yes</string>
     <string name="negative">No</string>
-    <string name="title_activity_view_pager">ViewPagerActivity</string>
-
+    <string name="title_activity_view_pager" translatable="false">ViewPagerActivity</string>
+    <string name="back">Back</string>
+    <string name="empty_note">Empty Note</string>
+    <string name="untitled">Untitled</string>
+    <string name="edit_button">Edit note</string>
+    <string name="update">Update note</string>
+    <string name="download">Download note from Firebase</string>
+    <string name="note_description" translatable="false">Note Description</string>
+    <string name="internet_unavailable">Internet unavailable</string>
+    <string name="hide">Hide</string>
 </resources>

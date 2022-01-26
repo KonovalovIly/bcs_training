@@ -2,6 +2,7 @@ package ru.konovalovily.notes.contracts
 
 interface IconDisplay {
 
-    fun displayHomeButton()
-    fun hideHomeButton()
+    fun displaySaveActionMode()
+    fun hideSaveActionMode()
+
 }

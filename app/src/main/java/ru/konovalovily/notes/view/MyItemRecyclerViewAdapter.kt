@@ -1,22 +1,20 @@
 package ru.konovalovily.notes.view
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import com.google.android.material.card.MaterialCardView
-import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.NoteModel
 import ru.konovalovily.notes.R
+import ru.konovalovily.notes.callback.NoteItemDiffCallback
 import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.databinding.NoteItemBinding
 
 
-class MyItemRecyclerViewAdapter(
-    private var values: List<NoteModel>,
-    private val activity: FragmentOpener?
-) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
+class MyItemRecyclerViewAdapter(private val activity: FragmentOpener?) :
+    ListAdapter<NoteModel, MyItemRecyclerViewAdapter.ViewHolder>(NoteItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -29,19 +27,12 @@ class MyItemRecyclerViewAdapter(
         )
     }
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
-    fun updateData(values: List<NoteModel>) {
-        this.values = values
-    }
-
-    override fun getItemCount(): Int = values.size
-
-    fun getIdItem(position: Int) = values[position].id
+    fun getIdItem(position: Int) = getItem(position).id
 
     inner class ViewHolder(binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -54,14 +45,9 @@ class MyItemRecyclerViewAdapter(
             tvTextNote.text = item.text
 
             cardView.setOnClickListener {
-                val bundle = Bundle().apply {
-                    putParcelable(Constant.TITLE_TAG, item)
-                }
-                val fragmentToManager = NoteDescriptionFragment.newInstance()
-                fragmentToManager.arguments = bundle
                 activity?.openFragment(
                     R.id.fragment_container_view,
-                    fragmentToManager
+                    NoteDescriptionFragment.newInstance(item)
                 )
             }
         }

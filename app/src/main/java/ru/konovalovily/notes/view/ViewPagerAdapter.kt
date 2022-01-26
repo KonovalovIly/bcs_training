@@ -1,39 +1,22 @@
 package ru.konovalovily.notes.view
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import ru.konovalovily.notes.NoteModel
-import ru.konovalovily.notes.databinding.FragmentNoteDescriptionBinding
 
-class ViewPagerAdapter(private var values: List<NoteModel>) :
-    RecyclerView.Adapter<ViewPagerAdapter.PagerVH>() {
+class ViewPagerAdapter(
+    private var values: List<NoteModel>,
+    fragment: FragmentActivity
+) : FragmentStateAdapter(fragment) {
 
-
-    inner class PagerVH(private var binding: FragmentNoteDescriptionBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: NoteModel) {
-            binding.title.text = item.title
-            binding.text.text = item.text
-            binding.date.text = item.data
-        }
-
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerVH =
-        PagerVH(
-            FragmentNoteDescriptionBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-
-    override fun onBindViewHolder(holder: PagerVH, position: Int) {
-        holder.bind(values[position])
+    fun updateData(values: List<NoteModel>) {
+        this.values = values
     }
 
     override fun getItemCount(): Int = values.size
+
+    override fun createFragment(position: Int): Fragment =
+        NoteDescriptionFragment.newInstance(values[position])
 
 }
