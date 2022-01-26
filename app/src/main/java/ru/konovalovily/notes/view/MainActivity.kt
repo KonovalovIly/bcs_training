@@ -111,10 +111,11 @@ class MainActivity : AppCompatActivity(), IconDisplay, FragmentOpener, EditingNo
         val builder: NetworkRequest.Builder =
             NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-         snackbar = Snackbar.make(
-             binding.llMain,
-             R.string.internet_unavailable,
-             Snackbar.LENGTH_INDEFINITE)
+        snackbar = Snackbar.make(
+            binding.llMain,
+            R.string.internet_unavailable,
+            Snackbar.LENGTH_INDEFINITE
+        )
         snackbar.setAction(R.string.hide) { snackbar.dismiss() }
 
         if (cm.isDefaultNetworkActive) snackbar.show()

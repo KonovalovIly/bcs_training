@@ -1,6 +1,7 @@
 package ru.konovalovily.notes.model
 
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.Flow
 import ru.konovalovily.notes.NoteModel
 
 class NoteRepository(private val noteDatabase: NoteDatabase) {
@@ -19,5 +20,8 @@ class NoteRepository(private val noteDatabase: NoteDatabase) {
     fun updateNote(note: NoteModel) {
         noteDatabase.noteDao().updateNote(note)
     }
+
+    fun getNotesForBackup(): Flow<List<NoteModel>> =
+        noteDatabase.noteDao().getAllNotesForBackup()
 
 }

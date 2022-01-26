@@ -7,14 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import com.google.android.material.card.MaterialCardView
 import ru.konovalovily.notes.NoteModel
-import ru.konovalovily.notes.R
 import ru.konovalovily.notes.callback.NoteItemDiffCallback
-import ru.konovalovily.notes.contracts.FragmentOpener
 import ru.konovalovily.notes.databinding.NoteItemBinding
 
 
-class MyItemRecyclerViewAdapter(private val activity: FragmentOpener?) :
+class MyItemRecyclerViewAdapter :
     ListAdapter<NoteModel, MyItemRecyclerViewAdapter.ViewHolder>(NoteItemDiffCallback()) {
+
+    var onClick: ((noteItem: NoteModel) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -45,10 +45,7 @@ class MyItemRecyclerViewAdapter(private val activity: FragmentOpener?) :
             tvTextNote.text = item.text
 
             cardView.setOnClickListener {
-                activity?.openFragment(
-                    R.id.fragment_container_view,
-                    NoteDescriptionFragment.newInstance(item)
-                )
+                onClick?.invoke(item)
             }
         }
     }

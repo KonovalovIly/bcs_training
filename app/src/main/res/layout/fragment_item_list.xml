@@ -8,14 +8,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_view_pager"
-            style="@style/Button"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_note_item"
-            android:text="@string/view_pager_activity"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginLeft="@dimen/margin_note_item"
+            android:layout_marginRight="@dimen/margin_note_item"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/search_hint"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
