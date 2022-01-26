@@ -14,20 +14,10 @@
         android:layout_height="?attr/actionBarSize"
         app:title="@string/app_name" />
 
-    <TextView
-        android:id="@+id/title_in_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/title"
-        android:textSize="@dimen/title_text_size" />
-
-    <TextView
-        android:id="@+id/text_in_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/text" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

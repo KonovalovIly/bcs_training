@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.appbar.MaterialToolbar
-import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.R
+import ru.konovalovily.notes.contracts.EditContract
 import ru.konovalovily.notes.databinding.ActivityEditBinding
-import ru.konovalovily.notes.presenter.EditNotesPresenter
 import ru.konovalovily.notes.presenter.EditPresenter
 
-class EditActivity : AppCompatActivity(), EditNotesView {
+class EditActivity : AppCompatActivity(), EditContract.View {
 
     private lateinit var binding: ActivityEditBinding
 
@@ -20,7 +19,7 @@ class EditActivity : AppCompatActivity(), EditNotesView {
     private lateinit var text: AppCompatEditText
     private lateinit var toolbar: MaterialToolbar
 
-    private lateinit var presenter: EditNotesPresenter
+    private lateinit var presenter: EditContract.Presenter
 
     private lateinit var emptyNote: String
     private lateinit var emptyNoteTitle: String
@@ -40,7 +39,7 @@ class EditActivity : AppCompatActivity(), EditNotesView {
         Toast.makeText(this, getString(message, title), Toast.LENGTH_SHORT).show()
     }
 
-    override fun createShareIntent(title: String, text: String) {
+    override fun openShareIntent(title: String, text: String) {
 
         startActivity(Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
@@ -48,13 +47,10 @@ class EditActivity : AppCompatActivity(), EditNotesView {
         })
     }
 
-    override fun createActivityIntent(title: String, text: String) {
+    override fun openActivity() {
 
-        startActivity(
-            Intent(this@EditActivity, MainActivity::class.java)
-                .putExtra(Constant.TITLE_TAG, title)
-                .putExtra(Constant.TEXT_TAG, text)
-        )
+        startActivity(Intent(this@EditActivity, MainActivity::class.java))
+        finish()
     }
 
     private fun initField() {
@@ -69,6 +65,10 @@ class EditActivity : AppCompatActivity(), EditNotesView {
     }
 
     private fun initFun() {
+
+        toolbar.setNavigationOnClickListener {
+            openActivity()
+        }
 
         toolbar.setOnMenuItemClickListener {
 
