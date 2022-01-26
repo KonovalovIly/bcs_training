@@ -8,6 +8,7 @@
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cv_note_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/gray_200"
@@ -23,20 +24,19 @@
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/title"
+                    style="@style/Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_note_item"
                     android:enabled="false"
                     android:maxLength="25"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/title_text_size"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/title" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/text"
+                    style="@style/Text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/top_margin_text"
@@ -44,17 +44,16 @@
                     android:minHeight="48dp"
                     android:paddingStart="@dimen/margin_note_item"
                     android:paddingEnd="@dimen/margin_note_item"
-                    android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@+id/title"
                     app:layout_constraintTop_toBottomOf="@+id/title"
                     tools:text="@string/text" />
 
                 <TextView
                     android:id="@+id/date"
+                    style="@style/Text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/note_date" />

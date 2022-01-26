@@ -10,14 +10,11 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_view_pager"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_note_item"
-            android:background="@drawable/button_background"
             android:text="@string/view_pager_activity"
-            android:textColor="@color/black"
-            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,6 +33,7 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add_note"
+                style="@style/Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_floating_button"

@@ -18,8 +18,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:menu="@menu/top_app_menu"
-                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
                 app:navigationContentDescription="@string/back"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
                 app:title="@string/app_name" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -42,12 +42,10 @@
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_title"
+                        style="@style/Title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/title"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/hint_text_color_edit_activity"
-                        android:textSize="@dimen/title_text_size"
                         tools:ignore="SpeakableTextPresentCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -63,12 +61,11 @@
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_text"
+                        style="@style/Text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
                         android:hint="@string/text"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/hint_text_color_edit_activity"
                         tools:ignore="SpeakableTextPresentCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
