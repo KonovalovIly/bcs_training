@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="title">Название</string>
+    <string name="text">Текст заметки</string>
+    <string name="save">Сохранить заметку</string>
+    <string name="share">Поделиться заметкой</string>
+    <string name="note">Заметки</string>
+    <string name="save_message">Вы сохранили заметку %1$s</string>
+    <string name="add_button">Добавить заметку</string>
+    <string name="dialog_message">Вы действительно хоитите сохранить заметку?</string>
+    <string name="positive">Да</string>
+    <string name="negative">Нет</string>
+    <string name="back">Назад</string>
+    <string name="empty_note">Пустая заметка</string>
+    <string name="untitled">Без названия</string>
+    <string name="edit_button">Изменить заметку</string>
+    <string name="update">Обновить заметку</string>
+    <string name="download">Скачать заметку из Firebase</string>
+    <string name="internet_unavailable">Интернет недоступен</string>
+    <string name="hide">Скрыть</string>
+    <string name="search">Поиск</string>
+    <string name="search_hint">Поиск по заметкам</string>
+    <string name="latitude">Широта:</string>
+    <string name="longitude">Долгота:</string>
+    <string name="update_location">Обновить местоположение</string>
+    <string name="location_unenabled">Отслеживание вашего местоположения отключено. Пожалуйста, включите его</string>
+    <string name="html_text"><![CDATA[<h1>Заглавленный текст из HTML</h1><p>Какой-то текст из html</p>]]></string>
+</resources>

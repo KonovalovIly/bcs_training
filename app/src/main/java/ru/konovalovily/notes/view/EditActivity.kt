@@ -3,16 +3,18 @@ package ru.konovalovily.notes.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.text.format.DateFormat
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.appbar.MaterialToolbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.konovalovily.notes.Constant
 import ru.konovalovily.notes.R
+import ru.konovalovily.notes.contracts.Saving
 import ru.konovalovily.notes.databinding.ActivityEditBinding
-import ru.konovalovily.notes.presenter.EditNotesPresenter
-import ru.konovalovily.notes.presenter.EditPresenter
+import ru.konovalovily.notes.viewmodel.EditViewModel
+import java.util.*
 
-class EditActivity : AppCompatActivity(), EditNotesView {
+class EditActivity : AppCompatActivity(), Saving {
 
     private lateinit var binding: ActivityEditBinding
 
@@ -20,10 +22,7 @@ class EditActivity : AppCompatActivity(), EditNotesView {
     private lateinit var text: AppCompatEditText
     private lateinit var toolbar: MaterialToolbar
 
-    private lateinit var presenter: EditNotesPresenter
-
-    private lateinit var emptyNote: String
-    private lateinit var emptyNoteTitle: String
+    private val viewModel by viewModel<EditViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -35,26 +34,12 @@ class EditActivity : AppCompatActivity(), EditNotesView {
         initFun()
     }
 
-    override fun showMessage(message: Int, title: String) {
-
-        Toast.makeText(this, getString(message, title), Toast.LENGTH_SHORT).show()
-    }
-
-    override fun createShareIntent(title: String, text: String) {
+    private fun openShareIntent(title: String, text: String) {
 
         startActivity(Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
+            type = Constant.SHARE_TYPE
             putExtra(Intent.EXTRA_TEXT, "$title \n $text")
         })
-    }
-
-    override fun createActivityIntent(title: String, text: String) {
-
-        startActivity(
-            Intent(this@EditActivity, MainActivity::class.java)
-                .putExtra(Constant.TITLE_TAG, title)
-                .putExtra(Constant.TEXT_TAG, text)
-        )
     }
 
     private fun initField() {
@@ -62,32 +47,45 @@ class EditActivity : AppCompatActivity(), EditNotesView {
         title = binding.etTitle
         text = binding.etText
         toolbar = binding.toolbar
-        presenter = EditPresenter(this)
-
-        emptyNote = getString(R.string.empty_note)
-        emptyNoteTitle = getString(R.string.empty_note_title)
     }
 
     private fun initFun() {
 
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
         toolbar.setOnMenuItemClickListener {
-
-            val titleString =
-                if (title.text.toString().isEmpty()) emptyNoteTitle else title.text.toString()
-            val textString =
-                if (text.text.toString().isEmpty()) emptyNote else text.text.toString()
-
             when (it.itemId) {
                 R.id.share -> {
-                    presenter.onShareButton(titleString, textString)
+                    openShareIntent(titleString(), textString())
                     true
                 }
                 R.id.save -> {
-                    presenter.saveNote(titleString, textString)
+                    DialogSaveNoteFragment().show(supportFragmentManager, Constant.TITLE_TAG)
                     true
                 }
                 else -> false
             }
         }
+
     }
+
+    override fun saveNote() {
+        viewModel.saveNote(
+            titleString(),
+            textString(),
+            DateFormat.getDateFormat(this).format(Date())
+        )
+        val intent = Intent(Constant.TITLE_TAG)
+        intent.putExtra(Constant.TITLE_TAG, titleString())
+        intent.putExtra(Constant.TITLE_TAG_2, textString())
+        sendBroadcast(intent)
+    }
+
+    private fun titleString() = if (title.text?.isEmpty() == true)
+        getString(R.string.untitled) else title.text.toString()
+
+    private fun textString() = if (text.text?.isEmpty() == true)
+        getString(R.string.empty_note) else text.text.toString()
 }
